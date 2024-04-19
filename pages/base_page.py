@@ -1,4 +1,6 @@
 from selenium.common.exceptions import NoSuchElementException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 class BasePage():
   def __init__(self, browser, url, timeout=10):
@@ -15,3 +17,7 @@ class BasePage():
     except (NoSuchElementException):
         return False
     return True
+  
+  def is_url_contains_login(self):
+    wait = WebDriverWait(self.browser, 10)
+    return wait.until(EC.url_contains('login'))
