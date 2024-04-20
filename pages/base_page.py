@@ -20,7 +20,14 @@ class BasePage():
     except (NoSuchElementException):
         return False
     return True
-  
+
+  def is_element_absent(self, how, what):
+    try:
+        self.browser.find_element(how, what)
+    except (NoSuchElementException):
+        return True
+    return False
+
   def is_url_contains_login(self):
     wait = WebDriverWait(self.browser, 10)
     return wait.until(EC.url_contains('login'))
@@ -66,3 +73,7 @@ class BasePage():
 
   def should_be_login_link(self):
     assert self.is_element_present(*BasePageLocators.LOGIN_LINK), "Login link is not presented"
+
+  def go_to_basket_page(self):
+    button = self.browser.find_element(*BasePageLocators.BASKET_BUTTON)
+    button.click()
