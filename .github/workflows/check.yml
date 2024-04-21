@@ -1,0 +1,20 @@
+name: Check
+on: 
+  push:
+    branches: [dev]
+jobs:
+  test:
+    runs-on: self-hosted
+    # ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Install Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+        cache: 'pip'
+      - name: Install deps
+        run: pip install -r requirements.txt
+      - name: Test
+        run: pytest -n=4 -m need_review --alluredir=./allure-results test_product_page.py
